@@ -1,5 +1,35 @@
 {
   "name": "everything-gemini-cli",
   "version": "1.0.0",
-  "description": "Agentic toolkit for frontend engineering: UX specification, React implementation, and code quality."
+  "description": "Agentic toolkit for comprehensive coding and development workflows.",
+  "settings": [
+    {
+      "name": "Observer Enabled",
+      "description": "Enable the background observer agent to analyze session observations",
+      "envVar": "GEMINI_LEARNING_OBSERVER_ENABLED",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "Run Interval (Minutes)",
+      "description": "How often the observer analyzes observations (in minutes)",
+      "envVar": "GEMINI_LEARNING_RUN_INTERVAL",
+      "type": "number",
+      "default": 5
+    },
+    {
+      "name": "Min Observations",
+      "description": "Minimum observations before analysis runs",
+      "envVar": "GEMINI_LEARNING_MIN_OBSERVATIONS",
+      "type": "number",
+      "default": 20
+    },
+    {
+      "name": "Compact Threshold",
+      "description": "Number of tool calls before suggesting a /compact",
+      "envVar": "GEMINI_COMPACT_THRESHOLD",
+      "type": "number",
+      "default": 50
+    }
+  ]
 }
