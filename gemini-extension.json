@@ -30,6 +30,24 @@
       "envVar": "GEMINI_COMPACT_THRESHOLD",
       "type": "number",
       "default": 50
+    },
+    {
+      "name": "GitHub Token",
+      "description": "Personal Access Token for GitHub MCP server",
+      "envVar": "GITHUB_TOKEN",
+      "type": "string"
     }
-  ]
+  ],
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
 }
