@@ -16,7 +16,7 @@ origin: EGC
 
 ## How It Works
 
-Uses the browser automation MCP (claude-in-chrome, Playwright, or Puppeteer) to interact with live pages like a real user.
+Uses the browser automation MCP (Playwright or Puppeteer) to interact with live pages like a real user.
 
 ### Phase 1: Smoke Test
 
@@ -89,8 +89,7 @@ Uses the browser automation MCP (claude-in-chrome, Playwright, or Puppeteer) to 
 
 Works with any browser MCP:
 
-- `mChild__claude-in-chrome__*` tools (preferred — uses your actual Chrome)
-- Playwright via `mcp__browserbase__*`
+- Playwright via `mcp__browserbase__*` (preferred)
 - Direct Puppeteer scripts
 
 Pair with `/canary-watch` for post-deploy monitoring.

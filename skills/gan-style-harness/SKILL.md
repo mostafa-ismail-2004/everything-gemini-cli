@@ -1,13 +1,12 @@
 ---
 name: gan-style-harness
-description: "GAN-inspired Generator-Evaluator agent harness for building high-quality applications autonomously. Based on Anthropic's March 2026 harness design paper."
-origin: ECC-community
-tools: Read, Write, Edit, Bash, Grep, Glob, Task
+description: "GAN-inspired Generator-Evaluator agent harness for building high-quality applications autonomously. Based on harness design research for long-running application development."
+origin: EGC
 ---
 
 # GAN-Style Harness Skill
 
-> Inspired by [Anthropic's Harness Design for Long-Running Application Development](https://www.anthropic.com/engineering/harness-design-long-running-apps) (March 24, 2026)
+> Inspired by [Harness Design for Long-Running Application Development](https://www.anthropic.com/engineering/harness-design-long-running-apps) (March 24, 2026)
 
 A multi-agent harness that separates **generation** from **evaluation**, creating an adversarial feedback loop that drives quality far beyond what a single agent can achieve.
 
@@ -27,7 +26,7 @@ This is the same dynamic as GANs (Generative Adversarial Networks): the Generato
 
 ## When NOT to Use
 
-- Quick single-file fixes (use standard `claude -p`)
+- Quick single-file fixes (use standard `gemini -p`)
 - Tasks with tight budget constraints (<$10)
 - Simple refactoring (use de-sloppify pattern instead)
 - Tasks that are already well-specified with tests (use TDD workflow)
@@ -37,7 +36,7 @@ This is the same dynamic as GANs (Generative Adversarial Networks): the Generato
 ```
                     ┌─────────────┐
                     │   PLANNER   │
-                    │  (Opus 4.6) │
+                    │  (gemini-3.1-pro-preview) │
                     └──────┬──────┘
                            │ Product Spec
                            │ (features, sprints, design direction)
@@ -49,14 +48,14 @@ This is the same dynamic as GANs (Generative Adversarial Networks): the Generato
               │                        │
               │  ┌──────────┐          │
               │  │GENERATOR │--build-->│──┐
-              │  │(Opus 4.6)│          │  │
+              │  │(3.1-pro) │          │  │
               │  └────▲─────┘          │  │
               │       │                │  │ live app
               │    feedback             │  │
               │       │                │  │
               │  ┌────┴─────┐          │  │
               │  │EVALUATOR │<-test----│──┘
-              │  │(Opus 4.6)│          │
+              │  │(3.1-pro) │          │
               │  │+Playwright│         │
               │  └──────────┘          │
               │                        │
@@ -77,7 +76,7 @@ This is the same dynamic as GANs (Generative Adversarial Networks): the Generato
 - Is deliberately **ambitious** — conservative planning leads to underwhelming results
 - Produces evaluation criteria that the Evaluator will use later
 
-**Model:** Opus 4.6 (needs deep reasoning for spec expansion)
+**Model:** gemini-3.1-pro-preview (needs deep reasoning for spec expansion)
 
 ### 2. Generator Agent
 
@@ -91,7 +90,7 @@ This is the same dynamic as GANs (Generative Adversarial Networks): the Generato
 - Manages git for version control between iterations
 - Reads Evaluator feedback and incorporates it in next iteration
 
-**Model:** Opus 4.6 (needs strong coding capability)
+**Model:** gemini-3.1-pro-preview (needs strong coding capability)
 
 ### 3. Evaluator Agent
 
@@ -109,7 +108,7 @@ This is the same dynamic as GANs (Generative Adversarial Networks): the Generato
 - Returns structured feedback with scores and specific issues
 - Is engineered to be **ruthlessly strict** — never praises mediocre work
 
-**Model:** Opus 4.6 (needs strong judgment + tool use)
+**Model:** gemini-3.1-pro-preview (needs strong judgment + tool use)
 
 ## Evaluation Criteria
 
@@ -181,43 +180,43 @@ GAN_EVAL_CRITERIA="functionality,performance,security" \
 ./scripts/gan-harness.sh "Build a REST API for task management"
 ```
 
-### Via Claude Code (Manual)
+### Via Gemini CLI (Manual)
 
 ```bash
 # Step 1: Plan
-claude -p --model opus "You are a Product Planner. Read PLANNER_PROMPT.md. Expand this brief into a full product spec: 'Build a Kanban board app'. Write spec to spec.md"
+gemini -p --model gemini-3.1-pro-preview "You are a Product Planner. Read PLANNER_PROMPT.md. Expand this brief into a full product spec: 'Build a Kanban board app'. Write spec to spec.md"
 
 # Step 2: Generate (iteration 1)
-claude -p --model opus "You are a Generator. Read spec.md. Implement Sprint 1. Start the dev server on port 3000."
+gemini -p --model gemini-3.1-pro-preview "You are a Generator. Read spec.md. Implement Sprint 1. Start the dev server on port 3000."
 
 # Step 3: Evaluate (iteration 1)
-claude -p --model opus --allowedTools "Read,Bash,mcp__playwright__*" "You are an Evaluator. Read EVALUATOR_PROMPT.md. Test the live app at http://localhost:3000. Score against the rubric. Write feedback to feedback-001.md"
+gemini -p --model gemini-3.1-pro-preview --allowedTools "Read,Bash,mcp__playwright__*" "You are an Evaluator. Read EVALUATOR_PROMPT.md. Test the live app at http://localhost:3000. Score against the rubric. Write feedback to feedback-001.md"
 
 # Step 4: Generate (iteration 2 — reads feedback)
-claude -p --model opus "You are a Generator. Read spec.md and feedback-001.md. Address all issues. Improve the scores."
+gemini -p --model gemini-3.1-pro-preview "You are a Generator. Read spec.md and feedback-001.md. Address all issues. Improve the scores."
 
 # Repeat steps 3-4 until pass threshold met
 ```
 
 ## Evolution Across Model Capabilities
 
-The harness should simplify as models improve. Following Anthropic's evolution:
+The harness should simplify as models improve. Following the industry evolution:
 
-### Stage 1 — Weaker Models (Sonnet-class)
+### Stage 1 — Weaker Models (Flash-class)
 
 - Full sprint decomposition required
 - Context resets between sprints (avoid context anxiety)
 - 2-agent minimum: Initializer + Coding Agent
 - Heavy scaffolding compensates for model limitations
 
-### Stage 2 — Capable Models (Opus 4.5-class)
+### Stage 2 — Capable Models (Pro-class)
 
 - Full 3-agent harness: Planner + Generator + Evaluator
 - Sprint contracts before each implementation phase
 - 10-sprint decomposition for complex apps
 - Context resets still useful but less critical
 
-### Stage 3 — Frontier Models (Opus 4.6-class)
+### Stage 3 — Frontier Models (Next-gen Pro-class)
 
 - Simplified harness: single planning pass, continuous generation
 - Evaluation reduced to single end-pass (model is smarter)
@@ -234,9 +233,9 @@ The harness should simplify as models improve. Following Anthropic's evolution:
 | --------------------- | ---------------------------------------- | ------------------------------------------ |
 | `GAN_MAX_ITERATIONS`  | `15`                                     | Maximum generator-evaluator cycles         |
 | `GAN_PASS_THRESHOLD`  | `7.0`                                    | Weighted score to pass (1-10)              |
-| `GAN_PLANNER_MODEL`   | `opus`                                   | Model for planning agent                   |
-| `GAN_GENERATOR_MODEL` | `opus`                                   | Model for generator agent                  |
-| `GAN_EVALUATOR_MODEL` | `opus`                                   | Model for evaluator agent                  |
+| `GAN_PLANNER_MODEL`   | `gemini-3.1-pro-preview`                         | Model for planning agent                   |
+| `GAN_GENERATOR_MODEL` | `gemini-3.1-pro-preview`                         | Model for generator agent                  |
+| `GAN_EVALUATOR_MODEL` | `gemini-3.1-pro-preview`                         | Model for evaluator agent                  |
 | `GAN_EVAL_CRITERIA`   | `design,originality,craft,functionality` | Comma-separated criteria                   |
 | `GAN_DEV_SERVER_PORT` | `3000`                                   | Port for the live app                      |
 | `GAN_DEV_SERVER_CMD`  | `npm run dev`                            | Command to start dev server                |
@@ -264,11 +263,11 @@ The harness should simplify as models improve. Following Anthropic's evolution:
 
 5. **Evaluator praising its own fixes** — Never let the evaluator suggest fixes and then evaluate those fixes. The evaluator only critiques; the generator fixes.
 
-6. **Context exhaustion** — For long sessions, use Claude Agent SDK's automatic compaction or reset context between major phases.
+6. **Context exhaustion** — For long sessions, use automatic compaction or reset context between major phases.
 
 ## Results: What to Expect
 
-Based on Anthropic's published results:
+Based on published results:
 
 | Metric        | Solo Agent        | GAN Harness           | Improvement   |
 | ------------- | ----------------- | --------------------- | ------------- |
@@ -282,7 +281,7 @@ Based on Anthropic's published results:
 
 ## References
 
-- [Anthropic: Harness Design for Long-Running Apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) — Original paper by Prithvi Rajasekaran
+- [Harness Design for Long-Running Apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) — Original paper by Prithvi Rajasekaran
 - [Epsilla: The GAN-Style Agent Loop](https://www.epsilla.com/blogs/anthropic-harness-engineering-multi-agent-gan-architecture) — Architecture deconstruction
 - [Martin Fowler: Harness Engineering](https://martinfowler.com/articles/exploring-gen-ai/harness-engineering.html) — Broader industry context
 - [OpenAI: Harness Engineering](https://openai.com/index/harness-engineering/) — OpenAI's parallel work

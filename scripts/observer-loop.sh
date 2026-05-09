@@ -13,8 +13,8 @@ USR1_FIRED=0
 ANALYZING=0
 LAST_ANALYSIS_EPOCH=0
 # Minimum seconds between analyses (prevents rapid re-triggering)
-ANALYSIS_COOLDOWN="${ECC_OBSERVER_ANALYSIS_COOLDOWN:-60}"
-IDLE_TIMEOUT_SECONDS="${ECC_OBSERVER_IDLE_TIMEOUT_SECONDS:-1800}"
+ANALYSIS_COOLDOWN="${EGC_OBSERVER_ANALYSIS_COOLDOWN:-60}"
+IDLE_TIMEOUT_SECONDS="${EGC_OBSERVER_IDLE_TIMEOUT_SECONDS:-1800}"
 SESSION_LEASE_DIR="${PROJECT_DIR}/.observer-sessions"
 ACTIVITY_FILE="${PROJECT_DIR}/.observer-last-activity"
 
@@ -117,8 +117,8 @@ analyze_observations() {
 
   echo "[$(date)] Analyzing $obs_count observations for project ${PROJECT_NAME}..." >> "$LOG_FILE"
 
-  if [ "${CLV2_IS_WINDOWS:-false}" = "true" ] && [ "${ECC_OBSERVER_ALLOW_WINDOWS:-false}" != "true" ]; then
-    echo "[$(date)] Skipping gemini analysis on Windows due to known non-interactive hang issue (#295). Set ECC_OBSERVER_ALLOW_WINDOWS=true to override." >> "$LOG_FILE"
+  if [ "${CLV2_IS_WINDOWS:-false}" = "true" ] && [ "${EGC_OBSERVER_ALLOW_WINDOWS:-false}" != "true" ]; then
+    echo "[$(date)] Skipping gemini analysis on Windows due to known non-interactive hang issue (#295). Set EGC_OBSERVER_ALLOW_WINDOWS=true to override." >> "$LOG_FILE"
     return
   fi
 
@@ -135,10 +135,10 @@ analyze_observations() {
 
   # Sample recent observations instead of loading the entire file (#521).
   # This prevents multi-MB payloads from being passed to the LLM.
-  MAX_ANALYSIS_LINES="${ECC_OBSERVER_MAX_ANALYSIS_LINES:-500}"
+  MAX_ANALYSIS_LINES="${EGC_OBSERVER_MAX_ANALYSIS_LINES:-500}"
   observer_tmp_dir="${PROJECT_DIR}/.observer-tmp"
   mkdir -p "$observer_tmp_dir"
-  analysis_file="$(mktemp "${observer_tmp_dir}/ecc-observer-analysis.XXXXXX.jsonl")"
+  analysis_file="$(mktemp "${observer_tmp_dir}/egc-observer-analysis.XXXXXX.jsonl")"
   tail -n "$MAX_ANALYSIS_LINES" "$OBSERVATIONS_FILE" > "$analysis_file"
   analysis_count=$(wc -l < "$analysis_file" 2>/dev/null || echo 0)
   echo "[$(date)] Using last $analysis_count of $obs_count observations for analysis" >> "$LOG_FILE"
@@ -148,7 +148,7 @@ analyze_observations() {
   # prefixes (e.g. /c/Users/...) that the Gemini subprocess cannot resolve.
   analysis_relpath=".observer-tmp/$(basename "$analysis_file")"
 
-  prompt_file="$(mktemp "${observer_tmp_dir}/ecc-observer-prompt.XXXXXX")"
+  prompt_file="$(mktemp "${observer_tmp_dir}/egc-observer-prompt.XXXXXX")"
   cat > "$prompt_file" <<PROMPT
 IMPORTANT: You are running in non-interactive --print mode. You MUST use the Write tool directly to create files. Do NOT ask for permission, do NOT ask for confirmation, do NOT output summaries instead of writing. Just read, analyze, and write.
 
@@ -203,8 +203,8 @@ PROMPT
     return
   fi
 
-  timeout_seconds="${ECC_OBSERVER_TIMEOUT_SECONDS:-120}"
-  max_turns="${ECC_OBSERVER_MAX_TURNS:-20}"
+  timeout_seconds="${EGC_OBSERVER_TIMEOUT_SECONDS:-120}"
+  max_turns="${EGC_OBSERVER_MAX_TURNS:-20}"
   exit_code=0
 
   case "$max_turns" in
@@ -225,7 +225,7 @@ PROMPT
   # Pass prompt via -p flag instead of stdin redirect for Windows compatibility (#842).
   # prompt_content is already loaded in-memory so this no longer depends on the
   # mktemp absolute path continuing to resolve after cwd changes (#1296).
-  ECC_SKIP_OBSERVE=1 ECC_HOOK_PROFILE=minimal gemini --model inherit --max-turns "$max_turns" --print \
+  EGC_SKIP_OBSERVE=1 EGC_HOOK_PROFILE=minimal gemini --model inherit --max-turns "$max_turns" --print \
     --allowedTools "Read,Write" \
     -p "$prompt_content" >> "$LOG_FILE" 2>&1 &
   gemini_pid=$!

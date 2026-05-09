@@ -1,7 +1,7 @@
 ---
 name: observer
 description: Background agent that analyzes session observations to detect patterns and create instincts. Uses cost-efficient processing. Adds project-scoped instincts.
-model: gemini-2-flash
+model: gemini-3-flash-preview
 ---
 
 # Observer Agent
