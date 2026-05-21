@@ -114,7 +114,7 @@ Each project gets a 12-character hash ID (e.g., `a1b2c3d4e5f6`). A registry file
 ### 1. Enable Observation Hooks
 
 The continuous learning observation hooks are bundled as part of the extension in the `hooks/hooks.json` file. 
-When the extension is linked globally (`gemini extensions link .`), the hooks are automatically discovered and will execute on `PreToolUse` and `PostToolUse` implicitly.
+When the extension is linked globally (`gemini extensions link .`), the hooks are automatically discovered and will execute on `BeforeTool` and `AfterTool` implicitly.
 
 ### 2. Initialize Directory Structure
 

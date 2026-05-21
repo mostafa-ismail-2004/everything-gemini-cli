@@ -1,6 +1,6 @@
 {
   "hooks": {
-    "PreToolUse": [
+    "BeforeTool": [
       {
         "matcher": "*",
         "hooks": [
@@ -29,7 +29,7 @@
         ]
       }
     ],
-    "PostToolUse": [
+    "AfterTool": [
       {
         "matcher": "*",
         "hooks": [

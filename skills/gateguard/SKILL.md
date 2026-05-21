@@ -6,7 +6,7 @@ origin: EGC
 
 # GateGuard — Fact-Forcing Pre-Action Gate
 
-A PreToolUse hook that forces Gemini to investigate before editing. Instead of self-evaluation ("are you sure?"), it demands concrete facts. The act of investigation creates awareness that self-evaluation never did.
+A BeforeTool hook that forces Gemini to investigate before editing. Instead of self-evaluation ("are you sure?"), it demands concrete facts. The act of investigation creates awareness that self-evaluation never did.
 
 ## When to Activate
 

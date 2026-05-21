@@ -66,7 +66,7 @@ Agents can read anything but only write to `src/api/`. Destructive commands are 
 
 ## Implementation
 
-Uses PreToolUse hooks to intercept Bash, Write, Edit, and MultiEdit tool calls. Checks the command/path against the active rules before allowing execution.
+Uses BeforeTool hooks to intercept Bash, Write, Edit, and MultiEdit tool calls. Checks the command/path against the active rules before allowing execution.
 
 ## Integration
 

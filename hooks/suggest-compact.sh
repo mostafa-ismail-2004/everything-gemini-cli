@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Strategic Compact Suggester
-# Runs on PreToolUse to suggest manual compaction at logical intervals
+# Runs on BeforeTool to suggest manual compaction at logical intervals
 
 # Use GEMINI_SESSION_ID or fallback to PPID
 SESSION_ID="${GEMINI_SESSION_ID:-${PPID:-default}}"

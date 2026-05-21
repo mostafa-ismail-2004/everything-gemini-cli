@@ -12,7 +12,7 @@
 
 set -e
 
-# Hook phase from CLI argument: "pre" (PreToolUse) or "post" (PostToolUse)
+# Hook phase from CLI argument: "pre" (BeforeTool) or "post" (AfterTool)
 HOOK_PHASE="${1:-post}"
 
 # ─────────────────────────────────────────────
