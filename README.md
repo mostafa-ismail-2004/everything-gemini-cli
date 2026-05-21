@@ -22,6 +22,7 @@ Everything Gemini CLI is an agentic toolkit designed to supercharge your develop
 | `security-reviewer`     | Vulnerability detection (OWASP Top 10, injection, etc.). |
 | `performance-optimizer` | Bottleneck identification and bundle size reduction.     |
 | `a11y-architect`        | WCAG 2.2 compliance and inclusive UI design.             |
+| `web-researcher`        | Real-time web search, docs retrieval, and source extraction. |
 
 ## 🚀 Getting Started
 

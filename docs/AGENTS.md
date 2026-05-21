@@ -30,6 +30,7 @@ This document provides a comprehensive list of agents available in the `everythi
 | **seo-specialist** | SEO specialist for technical SEO audits, on-page optimization, structured data, and content/keyword mapping. |
 | **silent-failure-hunter** | Review code for silent failures, swallowed errors, bad fallbacks, and missing error propagation. |
 | **typescript-reviewer** | Expert TypeScript/JavaScript code reviewer specializing in type safety, async correctness, and idiomatic patterns. |
+| **web-researcher** | Web search and information retrieval specialist. Uses Tavily MCP to query the live web and extract clean markdown/structured data summaries. |
 | **skill-comply-classifier** | Classifies tool calls against behavioral steps for skill compliance monitoring. |
 | **skill-comply-scenario-generator** | Generates synthetic test scenarios to verify agent behavioral compliance. |
 | **skill-comply-spec-generator** | Extracts observable behavioral sequences from natural language skill definitions. |
