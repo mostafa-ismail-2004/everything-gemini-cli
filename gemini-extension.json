@@ -35,13 +35,15 @@
       "name": "GitHub Token",
       "description": "Personal Access Token for GitHub MCP server",
       "envVar": "GITHUB_TOKEN",
-      "type": "string"
+      "type": "string",
+      "sensitive": true
     },
     {
       "name": "Tavily API Key",
       "description": "API Key for Tavily Search MCP server",
       "envVar": "TAVILY_API_KEY",
-      "type": "string"
+      "type": "string",
+      "sensitive": true
     }
   ],
   "mcpServers": {
