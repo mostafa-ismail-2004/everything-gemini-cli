@@ -15,6 +15,7 @@ This document provides a comprehensive list of skills available in the `everythi
 | **automation-audit-ops** | Evidence-first automation inventory and overlap audit workflow. |
 | **blueprint** | Implementation blueprints and architectural patterns for complex features. |
 | **browser-qa** | Automate visual testing and UI interaction verification using browser automation. |
+| **code-commenter** | Guides Gemini CLI in writing high-quality, language-agnostic code comments and documentation. |
 | **code-tour** | Create CodeTour `.tour` files — persona-targeted, step-by-step walkthroughs with real file and line anchors. |
 | **codebase-onboarding** | Analyze an unfamiliar codebase and generate a structured onboarding guide with architecture map and key conventions. |
 | **coding-standards** | Baseline cross-project coding conventions for naming, readability, and immutability. |

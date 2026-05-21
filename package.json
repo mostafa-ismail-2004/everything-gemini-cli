@@ -6,7 +6,7 @@
   "scripts": {
     "version": "npx ts-node sync-version.ts && git add gemini-extension.json"
   },
-  "author": "",
+  "author": "Mostafa Ismail",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.0.0",

@@ -36,6 +36,12 @@
       "description": "Personal Access Token for GitHub MCP server",
       "envVar": "GITHUB_TOKEN",
       "type": "string"
+    },
+    {
+      "name": "Tavily API Key",
+      "description": "API Key for Tavily Search MCP server",
+      "envVar": "TAVILY_API_KEY",
+      "type": "string"
     }
   ],
   "mcpServers": {
@@ -48,6 +54,14 @@
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
       }
+    },
+    "tavily": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.tavily.com/mcp/?tavilyApiKey=${TAVILY_API_KEY}"
+      ]
     }
   }
 }
