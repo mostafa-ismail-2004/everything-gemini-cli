@@ -1,6 +1,6 @@
 {
   "name": "everything-gemini-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Agentic toolkit for comprehensive coding and development workflows.",
   "type": "module",
   "scripts": {
