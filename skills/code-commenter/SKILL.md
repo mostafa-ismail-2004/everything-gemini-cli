@@ -71,4 +71,4 @@ async function authenticate(req) {
 2. **Refactor first:** If a comment is needed to explain _what_ the code does, try to rename variables or extract methods first.
 3. **Write the rationale:** If the _why_ is still unclear, add a concise comment.
 4. **Choose the format:** Use inline comments for logic, and blocks for APIs.
-5. **Review for redundancy:** Strip away any comments that add zero value to a senior developer reading the code.sdf
+5. **Review for redundancy:** Strip away any comments that add zero value to a senior developer reading the code.
