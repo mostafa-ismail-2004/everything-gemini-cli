@@ -367,7 +367,7 @@ if [ "$OBSERVER_ENABLED" = "true" ]; then
         _CHECK_OBSERVER_RUNNING "${PROJECT_DIR}/.observer.pid" || true
         _CHECK_OBSERVER_RUNNING "${CONFIG_DIR}/.observer.pid" || true
         if [ ! -f "${PROJECT_DIR}/.observer.pid" ] && [ ! -f "${CONFIG_DIR}/.observer.pid" ]; then
-          nohup "${SKILL_ROOT}/agents/start-observer.sh" start >/dev/null 2>&1 &
+          nohup "${SKILL_ROOT}/scripts/start-observer.sh" start >/dev/null 2>&1 &
         fi
       ) 9>"$LAZY_START_LOCK"
     else

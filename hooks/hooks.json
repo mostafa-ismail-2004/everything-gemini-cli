@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${extensionPath}/hooks/observe.sh"
+            "command": "bash ${extensionPath}/hooks/observe.sh"
           }
         ]
       },
@@ -15,7 +15,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${extensionPath}/hooks/suggest-compact.sh"
+            "command": "bash ${extensionPath}/hooks/suggest-compact.sh"
           }
         ]
       },
@@ -24,7 +24,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${extensionPath}/hooks/suggest-compact.sh"
+            "command": "bash ${extensionPath}/hooks/suggest-compact.sh"
           }
         ]
       }
@@ -35,7 +35,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${extensionPath}/hooks/observe.sh"
+            "command": "bash ${extensionPath}/hooks/observe.sh"
           }
         ]
       }
