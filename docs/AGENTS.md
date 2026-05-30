@@ -1,6 +1,6 @@
 # Agents
 
-This document provides a comprehensive list of agents available in the `everything-gemini-cli` toolkit.
+This document provides a comprehensive list of agents available in the `everything-agy` toolkit.
 
 | Agent | Description |
 |-------|-------------|

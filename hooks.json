@@ -1,16 +1,16 @@
 {
-  "hooks": {
+  "everything-agy-hooks": {
     "BeforeTool": [
       {
         "matcher": "*",
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${extensionPath}/hooks/observe.sh"
+            "command": "bash ${pluginPath}/hooks/observe.sh"
           },
           {
             "type": "command",
-            "command": "bash ${extensionPath}/hooks/sync-config.sh"
+            "command": "bash ${pluginPath}/hooks/sync-config.sh"
           }
         ]
       },
@@ -19,7 +19,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${extensionPath}/hooks/suggest-compact.sh"
+            "command": "bash ${pluginPath}/hooks/suggest-compact.sh"
           }
         ]
       },
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${extensionPath}/hooks/suggest-compact.sh"
+            "command": "bash ${pluginPath}/hooks/suggest-compact.sh"
           }
         ]
       }
@@ -39,7 +39,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${extensionPath}/hooks/observe.sh"
+            "command": "bash ${pluginPath}/hooks/observe.sh"
           }
         ]
       }

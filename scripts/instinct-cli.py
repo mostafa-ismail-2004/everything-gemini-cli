@@ -38,7 +38,7 @@ except ImportError:
 # Configuration
 # ─────────────────────────────────────────────
 
-HOMUNCULUS_DIR = Path.home() / ".gemini" / "continuous-learning"
+HOMUNCULUS_DIR = Path.home() / ".gemini" / "antigravity-cli" / "continuous-learning"
 PROJECTS_DIR = HOMUNCULUS_DIR / "projects"
 REGISTRY_FILE = HOMUNCULUS_DIR / "projects.json"
 
@@ -129,8 +129,8 @@ def detect_project() -> dict:
     """Detect current project context. Returns dict with id, name, root, project_dir."""
     project_root = None
 
-    # 1. GEMINI_PROJECT_DIR env var
-    env_dir = os.environ.get("GEMINI_PROJECT_DIR")
+    # 1. ANTIGRAVITY_PROJECT_DIR env var
+    env_dir = os.environ.get("ANTIGRAVITY_PROJECT_DIR")
     if env_dir and os.path.isdir(env_dir):
         project_root = env_dir
 

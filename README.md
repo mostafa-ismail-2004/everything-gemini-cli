@@ -1,13 +1,13 @@
-# Everything Gemini CLI 🚀
+# Everything Antigravity CLI 🚀
 
-Everything Gemini CLI is an agentic toolkit designed to supercharge your development workflow with the Gemini CLI. Originally inspired by the [everything-claude-code](https://github.com/affaan-m/everything-claude-code) project, this repo is now fully optimized for Gemini, with a robust background learning engine and automated compliance testing.
+Everything Antigravity CLI is an agentic toolkit designed to supercharge your development workflow with the Antigravity CLI (`agy`). Originally inspired by the [everything-claude-code](https://github.com/affaan-m/everything-claude-code) project, this repo is now fully optimized for Antigravity, with a robust background learning engine and automated compliance testing.
 
 ## ✨ Features
 
-- **🧠 Specialized Sub-Agents:** Access expert personas (e.g., `react-lead`, `seo-specialist`) directly within your Gemini sessions.
+- **🧠 Specialized Sub-Agents:** Access expert personas (e.g., `react-lead`, `seo-specialist`) directly within your Antigravity sessions.
 - **🛠️ Extensive Skills Library:** Over 50+ pre-defined skills covering API design, git workflows, accessibility, and more.
 - **🛰️ Continuous Learning (Observer):** A background daemon that learns from your sessions and creates project-specific "instincts."
-- **✅ Skill Compliance (`skill-comply`):** A unique framework to measure and improve how well Gemini follows your custom skills.
+- **✅ Skill Compliance (`skill-comply`):** A unique framework to measure and improve how well the agent follows your custom skills.
 - **🔌 Native MCP Integration:** Pre-configured with GitHub MCP for issue tracking, PR management, and code search.
 - **🪝 Automated Hooks:** Integrated hooks that trigger the observer and suggest optimizations like `/compact`.
 
@@ -28,7 +28,7 @@ Everything Gemini CLI is an agentic toolkit designed to supercharge your develop
 
 ### Prerequisites
 
-- [Gemini CLI](https://github.com/google/gemini-cli) installed.
+- [Antigravity CLI](https://github.com/google/antigravity-cli) (`agy`) installed.
 - Git & Python 3 (for advanced features).
 
 ### Installation
@@ -36,31 +36,34 @@ Everything Gemini CLI is an agentic toolkit designed to supercharge your develop
 Install directly from GitHub:
 
 ```bash
-gemini extension install https://github.com/mostafa-ismail-2004/everything-gemini-cli
+agy plugin install https://github.com/mostafa-ismail-2004/everything-agy
 ```
 
 Alternatively, for local development:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/mostafa-ismail-2004/everything-gemini-cli.git
-   cd everything-gemini-cli
+   git clone https://github.com/mostafa-ismail-2004/everything-agy.git
+   cd everything-agy
    ```
-2. **Register the Extension:**
-   Point your Gemini CLI to the local directory in `gemini-extension.json`.
+2. **Install the Plugin:**
+   Install the plugin from the local directory:
+   ```bash
+   agy plugin install .
+   ```
 
 ### Configure Environment
 
 ```bash
 export GITHUB_TOKEN=your_token_here
-export GEMINI_LEARNING_OBSERVER_ENABLED=true
+export ANTIGRAVITY_LEARNING_OBSERVER_ENABLED=true
 ```
 
 ## 🧠 Continuous Learning & Instincts
 
 The **Observer Agent** (`scripts/start-observer.sh`) runs in the background, analyzing `observations.jsonl` to detect recurring patterns.
 
-- **Instincts:** Automatically generated rules stored in `instincts/personal/`. Gemini loads these to adapt to your specific coding style.
+- **Instincts:** Automatically generated rules stored in `instincts/personal/`. Antigravity loads these to adapt to your specific coding style.
 - **Manual Control:**
   ```bash
   ./scripts/start-observer.sh start   # Start learning
@@ -70,7 +73,7 @@ The **Observer Agent** (`scripts/start-observer.sh`) runs in the background, ana
 
 ## ✅ Skill Compliance Testing
 
-Use `skill-comply` to verify if Gemini is actually following your custom `SKILL.md` files.
+Use `skill-comply` to verify if the agent is actually following your custom `SKILL.md` files.
 
 ```bash
 python3 scripts/skill_comply/run.py skills/my-new-skill/SKILL.md
@@ -84,11 +87,13 @@ This runs a multi-model simulation (using `gemini-3-flash-preview` for generatio
 - [`skills/`](docs/SKILLS.md): The core knowledge base of development workflows.
 - `hooks/`: Lifecycle scripts (Pre/Post tool use).
 - `scripts/`: The engine room (Observer, Instinct CLI, Compliance Runner).
-- `gemini-extension.json`: Native manifest for Gemini CLI.
+- `plugin.json`: Native manifest for Antigravity CLI.
+- `mcp_config.json`: MCP server configuration for Antigravity CLI.
+- `hooks.json`: Lifecycle hooks configuration.
 
 ## 🤝 Upstream Credits
 
-This project is a downstream evolution of [everything-claude-code](https://github.com/affaan-m/everything-claude-code). While it maintains compatibility with many upstream patterns, it is fully optimized for Gemini's tool-calling capabilities and introduces the `skill-comply` and `instincts` systems.
+This project is a downstream evolution of [everything-claude-code](https://github.com/affaan-m/everything-claude-code). While it maintains compatibility with many upstream patterns, it is fully optimized for Antigravity's tool-calling capabilities and introduces the `skill-comply` and `instincts` systems.
 
 ## 📄 License
 

@@ -6,8 +6,8 @@ set -e
 # Consume stdin to prevent SIGPIPE/clogging the hook process
 cat > /dev/null 2>/dev/null || true
 
-ENV_PATH="${HOME}/.gemini/extensions/everything-gemini-cli/.env"
-BACKUP_PATH="${HOME}/.gemini/everything-gemini-cli.env.bak"
+ENV_PATH="${HOME}/.gemini/antigravity-cli/plugins/everything-agy/.env"
+BACKUP_PATH="${HOME}/.gemini/antigravity-cli/everything-agy.env.bak"
 
 # 1. If the live .env is missing or empty, but a valid backup exists: Restore it.
 if [ ! -s "$ENV_PATH" ] && [ -s "$BACKUP_PATH" ]; then

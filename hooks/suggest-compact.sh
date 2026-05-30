@@ -2,14 +2,14 @@
 # Strategic Compact Suggester
 # Runs on BeforeTool to suggest manual compaction at logical intervals
 
-# Use GEMINI_SESSION_ID or fallback to PPID
-SESSION_ID="${GEMINI_SESSION_ID:-${PPID:-default}}"
+# Use ANTIGRAVITY_SESSION_ID or fallback to PPID
+SESSION_ID="${ANTIGRAVITY_SESSION_ID:-${PPID:-default}}"
 # Use a hidden directory for temp files to keep it clean
-TEMP_DIR="/tmp/.gemini-extension-compact"
+TEMP_DIR="/tmp/.antigravity-plugin-compact"
 mkdir -p "$TEMP_DIR"
 COUNTER_FILE="${TEMP_DIR}/count-${SESSION_ID}"
-# Use the environment variable injected from gemini-extension.json
-THRESHOLD=${GEMINI_COMPACT_THRESHOLD:-50}
+# Use the environment variable injected from plugin settings
+THRESHOLD=${ANTIGRAVITY_COMPACT_THRESHOLD:-50}
 
 # Initialize or increment counter
 if [ -f "$COUNTER_FILE" ]; then

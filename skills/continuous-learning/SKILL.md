@@ -5,13 +5,13 @@ description: Instinct-based learning system that observes sessions via hooks, cr
 
 # Continuous Learning - Instinct-Based Architecture
 
-An advanced learning system that turns your Gemini CLI sessions into reusable knowledge through atomic "instincts" - small learned behaviors with confidence scoring.
+An advanced learning system that turns your Antigravity CLI sessions into reusable knowledge through atomic "instincts" - small learned behaviors with confidence scoring.
 
 Features **project-scoped instincts** — React patterns stay in your React project, Python conventions stay in your Python project, and universal patterns (like "always validate input") are shared globally.
 
 ## When to Activate
 
-- Setting up automatic learning from Gemini CLI sessions
+- Setting up automatic learning from Antigravity CLI sessions
 - Configuring instinct-based behavior extraction via hooks
 - Tuning confidence thresholds for learned behaviors
 - Reviewing, exporting, or importing instinct libraries
@@ -102,19 +102,19 @@ Session Activity (in a git repo)
 
 The system automatically detects your current project:
 
-1. **`GEMINI_PROJECT_DIR` env var** (highest priority)
+1. **`ANTIGRAVITY_PROJECT_DIR` env var** (highest priority)
 2. **`git remote get-url origin`** -- hashed to create a portable project ID (same repo on different machines gets the same ID)
 3. **`git rev-parse --show-toplevel`** -- fallback using repo path (machine-specific)
 4. **Global fallback** -- if no project is detected, instincts go to global scope
 
-Each project gets a 12-character hash ID (e.g., `a1b2c3d4e5f6`). A registry file at `~/.gemini/continuous-learning/projects.json` maps IDs to human-readable names.
+Each project gets a 12-character hash ID (e.g., `a1b2c3d4e5f6`). A registry file at `~/.gemini/antigravity-cli/continuous-learning/projects.json` maps IDs to human-readable names.
 
 ## Quick Start
 
 ### 1. Enable Observation Hooks
 
 The continuous learning observation hooks are bundled as part of the extension in the `hooks/hooks.json` file. 
-When the extension is linked globally (`gemini extensions link .`), the hooks are automatically discovered and will execute on `BeforeTool` and `AfterTool` implicitly.
+When the plugin is installed (`agy plugin install .`), the hooks are automatically discovered and will execute on `BeforeTool` and `AfterTool` implicitly.
 
 ### 2. Initialize Directory Structure
 
@@ -122,7 +122,7 @@ The system creates directories automatically on first use, but you can also crea
 
 ```bash
 # Global directories
-mkdir -p ~/.gemini/continuous-learning/{instincts/{personal,inherited},evolved/{agents,skills,commands},projects}
+mkdir -p ~/.gemini/antigravity-cli/continuous-learning/{instincts/{personal,inherited},evolved/{agents,skills,commands},projects}
 
 # Project directories are auto-created when the hook first runs in a git repo
 ```
@@ -140,11 +140,7 @@ python3 scripts/instinct-cli.py projects   # List all known projects and their i
 
 ## Configuration
 
-Configuration is managed directly via the Gemini CLI extension settings. You can view or change these values using:
-
-```bash
-gemini extensions config everything-gemini-cli
-```
+Configuration is managed directly via the Antigravity CLI plugin settings. You can view or change these values using the `/settings` or `/config` slash commands in the CLI.
 
 | Setting | Default | Description |
 |-----|---------|-------------|
@@ -157,7 +153,7 @@ Other behavior (observation capture, instinct thresholds, project scoping, promo
 ## File Structure
 
 ```
-~/.gemini/continuous-learning/
+~/.gemini/antigravity-cli/continuous-learning/
 +-- identity.json           # Your profile, technical level
 +-- projects.json           # Registry: project hash -> name/path/remote
 +-- observations.jsonl      # Global observations (fallback)
@@ -256,4 +252,4 @@ Hooks fire **100% of the time**, deterministically. This means:
 
 ---
 
-*Instinct-based learning: teaching Gemini your patterns, one project at a time.*
+*Instinct-based learning: teaching Antigravity your patterns, one project at a time.*

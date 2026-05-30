@@ -1,10 +1,10 @@
 {
-  "name": "everything-gemini-cli",
-  "version": "1.0.2",
+  "name": "everything-agy",
+  "version": "2.0.0",
   "description": "Agentic toolkit for comprehensive coding and development workflows.",
   "type": "module",
   "scripts": {
-    "version": "npx ts-node sync-version.ts && git add gemini-extension.json"
+    "version": "npx ts-node sync-version.ts && git add plugin.json"
   },
   "author": "Mostafa Ismail",
   "license": "MIT",

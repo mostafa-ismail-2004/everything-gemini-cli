@@ -2,13 +2,13 @@
 # Continuous Learning - Observation Hook
 #
 # Captures tool use events for pattern analysis.
-# Gemini Code passes hook data via stdin as JSON.
+# Antigravity Code passes hook data via stdin as JSON.
 #
 # v2.1: Project-scoped observations — detects current project context
 #       and writes observations to project-specific directory.
 #
-# Registered via plugin hooks/hooks.json (auto-loaded when plugin is enabled).
-# Can also be registered manually in ~/.gemini/settings.json.
+# Registered via plugin hooks.json (auto-loaded when plugin is enabled).
+# Can also be registered manually in ~/.gemini/antigravity-cli/settings.json.
 
 set -e
 
@@ -19,7 +19,7 @@ HOOK_PHASE="${1:-post}"
 # Read stdin first (before project detection)
 # ─────────────────────────────────────────────
 
-# Read JSON from stdin (Gemini Code hook format)
+# Read JSON from stdin (Antigravity Code hook format)
 INPUT_JSON=$(cat)
 
 # Exit if no input
@@ -104,7 +104,7 @@ except(KeyError, TypeError, ValueError):
 # If cwd was provided in stdin, use it for project detection
 if [ -n "$STDIN_CWD" ] && [ -d "$STDIN_CWD" ]; then
   _GIT_ROOT=$(git -C "$STDIN_CWD" rev-parse --show-toplevel 2>/dev/null || true)
-  export GEMINI_PROJECT_DIR="${_GIT_ROOT:-$STDIN_CWD}"
+  export ANTIGRAVITY_PROJECT_DIR="${_GIT_ROOT:-$STDIN_CWD}"
 fi
 
 # ─────────────────────────────────────────────
@@ -115,7 +115,7 @@ fi
 # Sourcing detect-project.sh creates project-scoped directories and updates
 # projects.json, so automated sessions must return before that point.
 
-CONFIG_DIR="${HOME}/.gemini/continuous-learning"
+CONFIG_DIR="${HOME}/.gemini/antigravity-cli/continuous-learning"
 
 # Skip if disabled (check both default and CLV2_CONFIG-derived locations)
 if [ -f "$CONFIG_DIR/disabled" ]; then
@@ -134,13 +134,13 @@ fi
 # sdk-ts: Agent SDK sessions can be human-interactive (e.g. via Happy).
 # Non-interactive SDK automation is still filtered by Layers 2-5 below
 # (EGC_HOOK_PROFILE=minimal, EGC_SKIP_OBSERVE=1, agent_id, path exclusions).
-case "${GEMINI_CODE_ENTRYPOINT:-cli}" in
-  cli|sdk-ts|gemini-desktop) ;;
+case "${ANTIGRAVITY_CODE_ENTRYPOINT:-cli}" in
+  cli|sdk-ts|antigravity-desktop) ;;
   *) exit 0 ;;
 esac
 
-# Check if observer is enabled via environment variable (set in gemini-extension.json)
-if [ "$(echo "${GEMINI_LEARNING_OBSERVER_ENABLED:-false}" | tr '[:upper:]' '[:lower:]')" != "true" ]; then
+# Check if observer is enabled via environment variable (set in plugin settings)
+if [ "$(echo "${ANTIGRAVITY_LEARNING_OBSERVER_ENABLED:-false}" | tr '[:upper:]' '[:lower:]')" != "true" ]; then
   exit 0
 fi
 
@@ -155,7 +155,7 @@ _EGC_AGENT_ID=$(echo "$INPUT_JSON" | "$PYTHON_CMD" -c "import json,sys; print(js
 [ -n "$_EGC_AGENT_ID" ] && exit 0
 
 # Layer 5: known observer-session path exclusions.
-_EGC_SKIP_PATHS="${EGC_OBSERVE_SKIP_PATHS:-observer-sessions,.gemini-mem}"
+_EGC_SKIP_PATHS="${EGC_OBSERVE_SKIP_PATHS:-observer-sessions,.antigravity-mem}"
 if [ -n "$STDIN_CWD" ]; then
   IFS=',' read -ra _EGC_SKIP_ARRAY <<< "$_EGC_SKIP_PATHS"
   for _pattern in "${_EGC_SKIP_ARRAY[@]}"; do
@@ -193,7 +193,7 @@ if [ ! -f "$PURGE_MARKER" ] || [ "$(find "$PURGE_MARKER" -mtime +1 2>/dev/null)"
 fi
 
 # Parse using Python via stdin pipe (safe for all JSON payloads)
-# Pass HOOK_PHASE via env var since Gemini Code does not include hook type in stdin JSON
+# Pass HOOK_PHASE via env var since Antigravity Code does not include hook type in stdin JSON
 PARSED=$(echo "$INPUT_JSON" | HOOK_PHASE="$HOOK_PHASE" "$PYTHON_CMD" -c '
 import json
 import sys
@@ -203,12 +203,12 @@ try:
     data = json.load(sys.stdin)
 
     # Determine event type from CLI argument passed via env var.
-    # Gemini Code does NOT include a "hook_type" field in the stdin JSON,
+    # Antigravity Code does NOT include a "hook_type" field in the stdin JSON,
     # so we rely on the shell argument ("pre" or "post") instead.
     hook_phase = os.environ.get("HOOK_PHASE", "post")
     event = "tool_start" if hook_phase == "pre" else "tool_complete"
 
-    # Extract fields - Gemini Code hook format
+    # Extract fields - Antigravity Code hook format
     tool_name = data.get("tool_name", data.get("tool", "unknown"))
     tool_input = data.get("tool_input", data.get("input", {}))
     tool_output = data.get("tool_response")
@@ -345,7 +345,7 @@ _CHECK_OBSERVER_RUNNING() {
   return 1  # No PID file or process dead
 }
 
-if [ "$(echo "${GEMINI_LEARNING_OBSERVER_ENABLED:-false}" | tr '[:upper:]' '[:lower:]')" = "true" ]; then
+if [ "$(echo "${ANTIGRAVITY_LEARNING_OBSERVER_ENABLED:-false}" | tr '[:upper:]' '[:lower:]')" = "true" ]; then
   OBSERVER_ENABLED=true
 else
   OBSERVER_ENABLED=false

@@ -16,7 +16,7 @@
 set -e
 
 # NOTE: set -e is disabled inside the background subshell below
-# to prevent gemini CLI failures from killing the observer loop.
+# to prevent agy CLI failures from killing the observer loop.
 
 # ─────────────────────────────────────────────
 # Project detection
@@ -35,7 +35,7 @@ PYTHON_CMD="${CLV2_PYTHON_CMD:-}"
 # Configuration
 # ─────────────────────────────────────────────
 
-CONFIG_DIR="${HOME}/.gemini/continuous-learning"
+CONFIG_DIR="${HOME}/.gemini/antigravity-cli/continuous-learning"
 if [ -n "${CLV2_CONFIG:-}" ]; then
   CONFIG_FILE="$CLV2_CONFIG"
 else
@@ -72,11 +72,11 @@ stop_observer_if_running() {
   return 1
 }
 
-# Read config values from environment variables (set via gemini-extension.json settings)
+# Read config values from environment variables (set via plugin settings)
 # or fallback to hardcoded defaults.
-OBSERVER_INTERVAL_MINUTES="${GEMINI_LEARNING_RUN_INTERVAL:-5}"
-MIN_OBSERVATIONS="${GEMINI_LEARNING_MIN_OBSERVATIONS:-20}"
-OBSERVER_ENABLED="${GEMINI_LEARNING_OBSERVER_ENABLED:-false}"
+OBSERVER_INTERVAL_MINUTES="${ANTIGRAVITY_LEARNING_RUN_INTERVAL:-5}"
+MIN_OBSERVATIONS="${ANTIGRAVITY_LEARNING_MIN_OBSERVATIONS:-20}"
+OBSERVER_ENABLED="${ANTIGRAVITY_LEARNING_OBSERVER_ENABLED:-false}"
 
 # Normalize boolean string for shell comparison
 if [ "$(echo "$OBSERVER_ENABLED" | tr '[:upper:]' '[:lower:]')" = "true" ]; then

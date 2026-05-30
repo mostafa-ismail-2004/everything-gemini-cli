@@ -49,7 +49,7 @@ agents/
 
 Agents are discovered via two methods, merged and deduplicated by agent name:
 
-1. **`Gemini agents` command** (primary) — run `gemini agents list` to get all agents known to the CLI, including user agents, plugin agents (e.g. `everything-gemini-cli:architect`), and built-in agents. This automatically covers marketplace installs without any path configuration.
+1. **`Antigravity agents` command** (primary) — run `agy agents list` to get all agents known to the CLI, including user agents, plugin agents (e.g. `everything-agy:architect`), and built-in agents. This automatically covers marketplace installs without any path configuration.
 2. **File glob** (fallback, for reading agent content) — agent markdown files are read from:
    - `./agents/**/*.md` + `./agents/*.md` — project-local agents
    - `~/.gemini/agents/**/*.md` + `~/.gemini/agents/*.md` — global user agents
@@ -60,9 +60,9 @@ Earlier sources take precedence when names collide: user agents > plugin agents 
 
 ### Step 1: Discover Available Agents
 
-Run `gemini agents list` to get the full agent list. Parse each line:
+Run `agy agents list` to get the full agent list. Parse each line:
 
-- **Plugin agents** are prefixed with `plugin-name:` (e.g., `everything-gemini-cli:security-reviewer`). Use the part after `:` as the agent name and the plugin name as the domain.
+- **Plugin agents** are prefixed with `plugin-name:` (e.g., `everything-agy:security-reviewer`). Use the part after `:` as the agent name and the plugin name as the domain.
 - **User agents** have no prefix. Read the corresponding markdown file from `~/.gemini/agents/` or `./agents/` to extract the name and description.
 - **Built-in agents** (e.g., `Explore`, `Plan`) are skipped unless the user explicitly asks to include them.
 
@@ -73,7 +73,7 @@ For user agents loaded from markdown files:
 - Extract the agent name from the first `# Heading`. If no heading is found, derive the name from the filename (strip `.md`, replace hyphens with spaces, title-case)
 - Extract a one-line summary from the first paragraph after the heading
 
-If no agents are found after running `gemini agents list` and probing file locations, inform the user: "No agents found. Run `gemini agents list` to verify your setup." Then stop.
+If no agents are found after running `agy agents list` and probing file locations, inform the user: "No agents found. Run `agy agents list` to verify your setup." Then stop.
 
 ### Step 2: Present Domain Menu
 

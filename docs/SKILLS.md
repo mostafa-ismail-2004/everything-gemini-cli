@@ -1,6 +1,6 @@
 # Skills
 
-This document provides a comprehensive list of skills available in the `everything-gemini-cli` toolkit.
+This document provides a comprehensive list of skills available in the `everything-agy` toolkit.
 
 | Skill | Description |
 |-------|-------------|

@@ -6,7 +6,7 @@
 # parallel Gemini analysis processes.
 
 set +e
-unset GEMINICODE
+unset GEMINICODE; unset ANTIGRAVITYCODE
 
 SLEEP_PID=""
 USR1_FIRED=0
@@ -83,7 +83,7 @@ exit_if_idle_without_sessions() {
   fi
 }
 
-wait_for_gemini_analysis() {
+wait_for_agy_analysis() {
   local child_pid="$1"
   local wait_status=0
 
@@ -95,7 +95,7 @@ wait_for_gemini_analysis() {
       return 0
     fi
 
-    # SIGUSR1 can interrupt wait while the Gemini child is still running.
+    # SIGUSR1 can interrupt wait while the Antigravity child is still running.
     # Re-wait in that case so a signal is not logged as a false child failure.
     if kill -0 "$child_pid" 2>/dev/null; then
       continue
@@ -118,12 +118,12 @@ analyze_observations() {
   echo "[$(date)] Analyzing $obs_count observations for project ${PROJECT_NAME}..." >> "$LOG_FILE"
 
   if [ "${CLV2_IS_WINDOWS:-false}" = "true" ] && [ "${EGC_OBSERVER_ALLOW_WINDOWS:-false}" != "true" ]; then
-    echo "[$(date)] Skipping gemini analysis on Windows due to known non-interactive hang issue (#295). Set EGC_OBSERVER_ALLOW_WINDOWS=true to override." >> "$LOG_FILE"
+    echo "[$(date)] Skipping Antigravity analysis on Windows due to known non-interactive hang issue (#295). Set EGC_OBSERVER_ALLOW_WINDOWS=true to override." >> "$LOG_FILE"
     return
   fi
 
-  if ! command -v gemini >/dev/null 2>&1; then
-    echo "[$(date)] gemini CLI not found, skipping analysis" >> "$LOG_FILE"
+  if ! command -v agy >/dev/null 2>&1; then
+    echo "[$(date)] agy CLI not found, skipping analysis" >> "$LOG_FILE"
     return
   fi
 
@@ -225,27 +225,26 @@ PROMPT
   # Pass prompt via -p flag instead of stdin redirect for Windows compatibility (#842).
   # prompt_content is already loaded in-memory so this no longer depends on the
   # mktemp absolute path continuing to resolve after cwd changes (#1296).
-  EGC_SKIP_OBSERVE=1 EGC_HOOK_PROFILE=minimal gemini --model inherit --max-turns "$max_turns" --print \
-    --allowedTools "Read,Write" \
+  EGC_SKIP_OBSERVE=1 EGC_HOOK_PROFILE=minimal agy --dangerously-skip-permissions --print \
     -p "$prompt_content" >> "$LOG_FILE" 2>&1 &
-  gemini_pid=$!
+  agy_pid=$!
 
   (
     sleep "$timeout_seconds"
-    if kill -0 "$gemini_pid" 2>/dev/null; then
-      echo "[$(date)] Gemini analysis timed out after ${timeout_seconds}s; terminating process" >> "$LOG_FILE"
-      kill "$gemini_pid" 2>/dev/null || true
+    if kill -0 "$agy_pid" 2>/dev/null; then
+      echo "[$(date)] Antigravity analysis timed out after ${timeout_seconds}s; terminating process" >> "$LOG_FILE"
+      kill "$agy_pid" 2>/dev/null || true
     fi
   ) &
   watchdog_pid=$!
 
-  wait_for_gemini_analysis "$gemini_pid"
+  wait_for_agy_analysis "$agy_pid"
   exit_code=$?
   kill "$watchdog_pid" 2>/dev/null || true
   rm -f "$analysis_file"
 
   if [ "$exit_code" -ne 0 ]; then
-    echo "[$(date)] Gemini analysis failed (exit $exit_code)" >> "$LOG_FILE"
+    echo "[$(date)] Antigravity analysis failed (exit $exit_code)" >> "$LOG_FILE"
   fi
 
   if [ -f "$OBSERVATIONS_FILE" ]; then
